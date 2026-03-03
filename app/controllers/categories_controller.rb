@@ -38,6 +38,9 @@ class CategoriesController < ApplicationController
 
   # PATCH/PUT /categories/1 or /categories/1.json
   def update
+
+    authorize @category
+
     respond_to do |format|
       if @category.update(category_params)
         format.html { redirect_to @category, notice: "Category was successfully updated.", status: :see_other }
@@ -51,6 +54,8 @@ class CategoriesController < ApplicationController
 
   # DELETE /categories/1 or /categories/1.json
   def destroy
+    authorize @category
+    
     @category.destroy!
 
     respond_to do |format|
@@ -62,8 +67,7 @@ class CategoriesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_category
-      @category = current_user.categories.find(params.expect(:id)) 
-      # @category vai se limitar apenas as categorias do usuario autenticado
+      @category = Category.find(params.expect(:id)) 
     end
 
     # Only allow a list of trusted parameters through.
