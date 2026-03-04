@@ -9,15 +9,18 @@ class TasksController < ApplicationController
 
   # GET /tasks/1 or /tasks/1.json
   def show
+    authorize @task
   end
 
   # GET /tasks/new
   def new
     @task = Task.new
+    authorize @task
   end
 
   # GET /tasks/1/edit
   def edit
+    authorize @task
   end
 
   # POST /tasks or /tasks.json
@@ -38,6 +41,8 @@ class TasksController < ApplicationController
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
+    authorize @task
+
     respond_to do |format|
       if @task.update(task_params)
         format.html { redirect_to @task, notice: "Task was successfully updated.", status: :see_other }
@@ -51,6 +56,7 @@ class TasksController < ApplicationController
 
   # DELETE /tasks/1 or /tasks/1.json
   def destroy
+    authorize @task
     @task.destroy!
 
     respond_to do |format|
