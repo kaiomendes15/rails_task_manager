@@ -17,18 +17,14 @@
   </div>
 
   <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.number_field :status %>
-  </div>
-
-  <div>
     <%= form.label :due_date, style: "display: block" %>
     <%= form.datetime_field :due_date %>
   </div>
 
   <div>
     <%= form.label :category_id, style: "display: block" %>
-    <%= form.text_field :category_id %>
+    <%= form.collection_select(:category_id, current_user.categories, :id, :title, prompt: true) %>
+    <%# esse prompt é só para o dropbox vir vazio e n com o primeiro valor que encontrar. %>
   </div>
 
   <div>
