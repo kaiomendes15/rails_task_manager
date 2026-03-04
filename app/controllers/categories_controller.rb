@@ -5,11 +5,15 @@ class CategoriesController < ApplicationController
 
   # GET /categories or /categories.json
   def index
-    @categories = current_user.categories
+    #método do pundit para usar o resolve dentro do scope
+    @categories = policy_scope(Category)
+    # o authorize não serve para index, pois ele é usado para verificar se o usuário tem permissão de acessar um registro específico, e no index é acessanda uma coleção de registros, e não um registro específico. por isso, tem que uar o policy_scope para filtrar os registros que o usuário tem permissão de acessar.
   end
 
   # GET /categories/1 or /categories/1.json
   def show
+    @category = Category.find(params[:id])
+    authorize @category
   end
 
   # GET /categories/new
