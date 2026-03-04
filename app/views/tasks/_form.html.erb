@@ -1,21 +1,17 @@
 <%= form_with(model: task) do |form| %>
-  <% if task.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
-
-      <ul>
-        <% task.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
 
   <div>
     <%= form.label :title, style: "display: block" %>
     <%= form.text_field :title %>
   </div>
 
+  <% if task.errors[:due_date].first %>
+    <div style="color: red">
+      <p>
+        <%= error.full_message %>
+      </p>
+    </div>
+  <% end %>
   <div>
     <%= form.label :due_date, style: "display: block" %>
     <%= form.datetime_field :due_date %>
