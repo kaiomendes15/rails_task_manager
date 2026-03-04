@@ -35,7 +35,5 @@ class CategoryPolicy < ApplicationPolicy
       # adicionar aq verificações de roles para usuário admin e normal
       scope.where(user_id: user.id)
     end
-
-    
   end
 end

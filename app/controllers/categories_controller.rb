@@ -1,12 +1,12 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_user!
   # Toda vez que o usuario envia alguma req, o before_action entra. Nesse caso, envia o token autenticado do user junto com a req. O devise intercepta e verifica se aquele usuario existe. ENtao ele pega esse usuario e coloca dentro da variavel current_user.
-  
+
   before_action :set_category, only: %i[ show edit update destroy ]
 
   # GET /categories or /categories.json
   def index
-    #método do pundit para usar o resolve dentro do scope
+    # método do pundit para usar o resolve dentro do scope
     @categories = policy_scope(Category)
     # o authorize não serve para index, pois ele é usado para verificar se o usuário tem permissão de acessar um registro específico, e no index é acessanda uma coleção de registros, e não um registro específico. por isso, tem que uar o policy_scope para filtrar os registros que o usuário tem permissão de acessar.
   end
@@ -45,7 +45,6 @@ class CategoriesController < ApplicationController
 
   # PATCH/PUT /categories/1 or /categories/1.json
   def update
-
     authorize @category
 
     respond_to do |format|
@@ -62,7 +61,7 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1 or /categories/1.json
   def destroy
     authorize @category
-    
+
     @category.destroy!
 
     respond_to do |format|
@@ -74,7 +73,7 @@ class CategoriesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_category
-      @category = Category.find(params.expect(:id)) 
+      @category = Category.find(params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.

@@ -13,6 +13,4 @@ class Task < ApplicationRecord
        errors.add(:category_id, "Essa categoria não pertence ao usuário.")
      end
   end
-
-  
 end
