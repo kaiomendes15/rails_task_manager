@@ -1,27 +1,32 @@
 class TasksController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_task, only: %i[ show edit update destroy ]
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.all
+    @tasks = policy_scope(Task)
   end
 
   # GET /tasks/1 or /tasks/1.json
   def show
+    authorize @task
   end
 
   # GET /tasks/new
   def new
     @task = Task.new
+    authorize @task
   end
 
   # GET /tasks/1/edit
   def edit
+    authorize @task
   end
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
+    authorize @task
 
     respond_to do |format|
       if @task.save
@@ -36,6 +41,8 @@ class TasksController < ApplicationController
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
+    authorize @task
+
     respond_to do |format|
       if @task.update(task_params)
         format.html { redirect_to @task, notice: "Task was successfully updated.", status: :see_other }
@@ -49,6 +56,7 @@ class TasksController < ApplicationController
 
   # DELETE /tasks/1 or /tasks/1.json
   def destroy
+    authorize @task
     @task.destroy!
 
     respond_to do |format|
@@ -65,6 +73,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.expect(task: [ :title, :status, :due_date, :category_id, :user_id ])
+      params.expect(task: [ :title, :due_date, :category_id ])
     end
 end

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class CategoryPolicyTest < ActiveSupport::TestCase
+class TaskPolicyTest < ActiveSupport::TestCase
   def test_scope
   end
 

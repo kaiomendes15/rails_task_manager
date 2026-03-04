@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   def user_not_authorized
     flash[:alert] = "Acesso negado. Você não tem permissão para realizar esta ação."
-    
+
     # redireciona o usuario para a pagina ou raiz
     redirect_back(fallback_location: root_path)
   end
