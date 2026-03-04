@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_user!
+  # Toda vez que o usuario envia alguma req, o before_action entra. Nesse caso, envia o token autenticado do user junto com a req. O devise intercepta e verifica se aquele usuario existe. ENtao ele pega esse usuario e coloca dentro da variavel current_user.
   
   before_action :set_category, only: %i[ show edit update destroy ]
 
@@ -12,22 +13,24 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1 or /categories/1.json
   def show
-    @category = Category.find(params[:id])
     authorize @category
   end
 
   # GET /categories/new
   def new
     @category = Category.new
+    authorize @category
   end
 
   # GET /categories/1/edit
   def edit
+    authorize @category
   end
 
   # POST /categories or /categories.json
   def create
     @category = current_user.categories.build(category_params)
+    authorize @category
 
     respond_to do |format|
       if @category.save
