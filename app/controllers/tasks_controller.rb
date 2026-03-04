@@ -22,7 +22,8 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
+    authorize @task
 
     respond_to do |format|
       if @task.save
@@ -66,6 +67,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.expect(task: [ :title, :status, :due_date, :category_id ])
+      params.expect(task: [ :title, :due_date, :category_id ])
     end
 end
