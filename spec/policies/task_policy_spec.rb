@@ -18,7 +18,7 @@ RSpec.describe TaskPolicy, type: :policy do
       expect(resultado).to include(task)
       expect(resultado).not_to include(task2)
     end
-    
+
     it "permite acesso a todas as tasks para um usuário admin" do
       resultado = TaskPolicy::Scope.new(test_admin, Task).resolve
 

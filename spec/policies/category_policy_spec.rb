@@ -16,14 +16,13 @@ RSpec.describe CategoryPolicy, type: :policy do
       expect(resultado).to include(category)
       expect(resultado).not_to include(category2)
     end
-    
+
     it "permite acesso a todas as categorias para um usuário admin" do
       resultado = CategoryPolicy::Scope.new(test_admin, Category).resolve
 
       expect(resultado).to include(category)
       expect(resultado).to include(category2)
     end
-    
   end
 
   permissions :show? do

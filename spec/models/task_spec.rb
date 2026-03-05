@@ -6,16 +6,15 @@ RSpec.describe Task, type: :model do
   let(:test_category) { Category.create!(title: "Trabalho", description: "Tarefas relacionadas ao trabalho", user: test_user) }
   let(:test_user2) { User.create!(email: "test_user2@email.com", password: "password123") }
   let(:other_category) { Category.create!(title: "Lazer", description: "Tarefas relacionadas ao lazer", user: test_user2) }
-  
+
   context "Quando os atributos obrigatórios estão preenchidos" do
     it "é válido" do
-
       task = Task.new(title: "Trabalho", due_date: Date.tomorrow, category: test_category, user: test_user)
 
-      task.valid? 
-      
+      task.valid?
+
       expect(task).to be_valid
-    end 
+    end
   end
 
   context "Quando os atributos obrigatórios não estão preenchidos" do
@@ -69,30 +68,28 @@ RSpec.describe Task, type: :model do
     it "é válido" do
       task = Task.new(title: "Trabalho", due_date: Date.tomorrow, category: test_category, user: test_user)
 
-      task.valid? 
-      
+      task.valid?
+
       expect(task.status).to eq("pendente")
-    end 
+    end
   end
 
   context "Alterar status da tarefa" do
     it "atualiza o status com sucesso" do
-     
       # ! -> lanca excecao se tiver erro.
       task = Task.create!(title: "Trabalho", due_date: Date.tomorrow, category: test_category, user: test_user)
       expect(task.status).to eq("pendente")
 
       # enum tem um metodo que altera o seu valor e ja da update
-      task.em_progresso! 
+      task.em_progresso!
       # task.update(status: :em_progresso)
 
       expect(task.status).to eq("em_progresso")
-    end 
+    end
   end
 
   context "Quando a categoria pertence a outro usuário" do
     it "não é válido" do
-
       # Tentar criar uma tarefa para o test_user usando a categoria do test_user2
       task = Task.new(title: "Tarefa inválida", due_date: Date.tomorrow, category: other_category, user: test_user)
 
