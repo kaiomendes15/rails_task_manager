@@ -10,7 +10,7 @@ class TaskPolicy < ApplicationPolicy
   end
 
   def show?
-      record.user_id == user.id
+      record.user_id == user.id || user.is_admin?
   end
 
   def new?
@@ -22,21 +22,25 @@ class TaskPolicy < ApplicationPolicy
   end
 
   def edit?
-    record.user_id == user.id
+    record.user_id == user.id || user.is_admin?
   end
 
   def update?
-    record.user_id == user.id
+    record.user_id == user.id || user.is_admin?
   end
 
   def destroy?
-    record.user_id == user.id
+    record.user_id == user.id || user.is_admin?
   end
 
   class Scope < ApplicationPolicy::Scope
     # NOTE: Be explicit about which records you allow access to!
     def resolve
-      scope.where(user_id: user.id)
+      if user.is_admin?
+        scope.all
+      else
+        scope.where(user_id: user.id)
+      end
     end
   end
 end
