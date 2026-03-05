@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Category, type: :model do
 
   # precisa criar um usuario pq o banco de teste sempre é zerado.
-  let(:test_user) { User.create!(email: "teste_user@email.com", password: "password123") }
+  let(:test_user) { User.create!(email: "test_user@email.com", password: "password123") }
   
   context "Quanto os atributos obrigatórios estão preenchidos" do
     it "é válido" do
