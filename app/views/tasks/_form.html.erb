@@ -3,27 +3,39 @@
   <div>
     <%= form.label :title, style: "display: block" %>
     <%= form.text_field :title %>
+    
+    <%# Pergunta se tem erro no título, e se tiver, imprime o primeiro %>
+    <% if task.errors[:title].any? %>
+      <p style="color: red; margin-top: 5px; font-size: 0.9em;">
+        <%= task.errors[:title].first %>
+      </p>
+    <% end %>
   </div>
 
-  <% if task.errors[:due_date].first %>
-    <div style="color: red">
-      <p>
-        <%= error.full_message %>
-      </p>
-    </div>
-  <% end %>
   <div>
     <%= form.label :due_date, style: "display: block" %>
     <%= form.datetime_field :due_date %>
+    
+    <% if task.errors[:due_date].any? %>
+      <p style="color: red; margin-top: 5px; font-size: 0.9em;">
+        <%= task.errors[:due_date].first %>
+      </p>
+    <% end %>
   </div>
 
   <div>
     <%= form.label :category_id, style: "display: block" %>
     <%= form.collection_select(:category_id, current_user.categories, :id, :title, prompt: true) %>
     <%# esse prompt é só para o dropbox vir vazio e n com o primeiro valor que encontrar. %>
+    
+    <% if task.errors[:category_id].any? %>
+      <p style="color: red; margin-top: 5px; font-size: 0.9em;">
+        <%= task.errors[:category_id].first %>
+      </p>
+    <% end %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div style="margin-top: 20px;">
+    <%= form.submit "Salvar Tarefa" %>
   </div>
 <% end %>
