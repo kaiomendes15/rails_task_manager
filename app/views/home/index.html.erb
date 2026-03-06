@@ -28,12 +28,24 @@
     <% @categories.each do |category| %>
       <div class="mb-14">
         
-        <h2 class="text-2xl font-bold text-slate-100 border-b border-slate-700 pb-3 mb-6 flex items-center">
-          <span class="bg-slate-800 border border-slate-600 px-3 py-1 rounded-md text-sm text-slate-400 mr-4 font-normal">
-            Categoria
-          </span>
-          <%= category.title %>
-        </h2>
+        <div class="border-b border-slate-700 pb-3 mb-6 flex justify-between items-end">
+          <h2 class="text-2xl font-bold text-slate-100 flex items-center">
+            <span class="bg-slate-800 border border-slate-600 px-3 py-1 rounded-md text-sm text-slate-400 mr-4 font-normal">
+              Categoria
+            </span>
+            <%= category.title %>
+          </h2>
+          
+          <div class="flex items-center gap-3">
+            <%= link_to edit_category_path(category), class: "text-slate-500 hover:text-blue-400 transition duration-200", title: "Editar Categoria" do %>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+            <% end %>
+            
+            <%= button_to category, method: :delete, form: { class: "inline-flex", data: { turbo_confirm: "Excluir esta categoria apagará TODAS as tarefas dentro dela. Tem certeza?" } }, class: "text-slate-500 hover:text-red-500 transition duration-200 bg-transparent border-none cursor-pointer", title: "Excluir Categoria" do %>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+            <% end %>
+          </div>
+        </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           
@@ -44,7 +56,7 @@
             <% category.tasks.each do |task| %>
               <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-lg hover:border-slate-500 transition duration-200 flex flex-col justify-between">
                 
-                <div class="flex justify-between items-start mb-6 gap-2">
+                <div class="flex justify-between items-start mb-4 gap-2">
                   <h3 class="text-lg font-bold text-white leading-tight"><%= task.title %></h3>
                   
                   <% 
@@ -64,9 +76,21 @@
                   </span>
                 </div>
                 
-                <div class="text-sm text-slate-400 flex items-center mt-auto">
-                  <svg class="w-4 h-4 mr-2 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                  <%= task.due_date ? task.due_date.strftime("%d/%m/%Y") : "Sem data" %>
+                <div class="flex justify-between items-center mt-auto pt-4 border-t border-slate-700/50">
+                  <div class="text-sm text-slate-400 flex items-center">
+                    <svg class="w-4 h-4 mr-2 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <%= task.due_date ? task.due_date.strftime("%d/%m/%Y") : "Sem data" %>
+                  </div>
+                  
+                  <div class="flex gap-2">
+                    <%= link_to edit_task_path(task), class: "text-slate-500 hover:text-blue-400 transition duration-200", title: "Editar Tarefa" do %>
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5h18.536z"></path></svg>
+                    <% end %>
+                    
+                    <%= button_to task, method: :delete, form: { class: "inline-flex", data: { turbo_confirm: "Excluir esta tarefa?" } }, class: "text-slate-500 hover:text-red-500 transition duration-200 bg-transparent border-none cursor-pointer", title: "Excluir Tarefa" do %>
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    <% end %>
+                  </div>
                 </div>
 
               </div>
@@ -79,3 +103,5 @@
     <% end %>
     
   <% end %>
+
+</div>
