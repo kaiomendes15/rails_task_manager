@@ -1,0 +1,17 @@
+<div class="min-h-screen bg-slate-900 flex items-center justify-center p-4">
+  <div class="max-w-md w-full bg-slate-800 rounded-xl shadow-2xl p-8 border border-slate-700">
+    
+    <div class="flex flex-col items-center mb-8">
+      <div class="w-12 h-12 bg-blue-500/10 text-blue-500 rounded-full flex items-center justify-center mb-4 border border-blue-500/20">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5h18.536z"></path></svg>
+      </div>
+      <h1 class="text-3xl font-bold text-white text-center">
+        Editar Usuário
+      </h1>
+      <p class="text-slate-400 text-sm mt-2 text-center">Atualize credenciais ou permissões.</p>
+    </div>
+
+    <%= render "form", user: @user %>
+
+  </div>
+</div>

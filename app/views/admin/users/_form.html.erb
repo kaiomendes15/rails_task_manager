@@ -1,0 +1,61 @@
+<%= form_with(model: [:admin, user], class: "w-full") do |form| %>
+
+  <div class="mb-6">
+    <%= form.label :name, "Nome Completo (Opcional)", class: "block text-slate-400 text-sm font-bold mb-2" %>
+    <%= form.text_field :name, class: "w-full bg-slate-700 border #{user.errors[:name].any? ? 'border-red-500' : 'border-slate-600'} text-white rounded-lg px-4 py-3 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition duration-200" %>
+    <% if user.errors[:name].any? %>
+      <p class="text-red-500 text-xs italic mt-2"><%= user.errors.full_messages_for(:name).first %></p>
+    <% end %>
+  </div>
+
+  <div class="mb-6">
+    <%= form.label :email, "Endereço de E-mail", class: "block text-slate-400 text-sm font-bold mb-2" %>
+    <%= form.email_field :email, class: "w-full bg-slate-700 border #{user.errors[:email].any? ? 'border-red-500' : 'border-slate-600'} text-white rounded-lg px-4 py-3 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition duration-200" %>
+    <% if user.errors[:email].any? %>
+      <p class="text-red-500 text-xs italic mt-2"><%= user.errors.full_messages_for(:email).first %></p>
+    <% end %>
+  </div>
+
+  <div class="mb-6">
+    <div class="flex justify-between items-end mb-2">
+      <%= form.label :password, "Senha", class: "block text-slate-400 text-sm font-bold" %>
+      <% if user.persisted? %>
+        <span class="text-xs text-slate-500 italic">(Deixe em branco para não alterar)</span>
+      <% end %>
+    </div>
+    <%= form.password_field :password, class: "w-full bg-slate-700 border #{user.errors[:password].any? ? 'border-red-500' : 'border-slate-600'} text-white rounded-lg px-4 py-3 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition duration-200" %>
+    <% if user.errors[:password].any? %>
+      <p class="text-red-500 text-xs italic mt-2"><%= user.errors.full_messages_for(:password).first %></p>
+    <% end %>
+  </div>
+
+  <div class="mb-6">
+    <%= form.label :password_confirmation, "Confirme a Senha", class: "block text-slate-400 text-sm font-bold mb-2" %>
+    <%= form.password_field :password_confirmation, class: "w-full bg-slate-700 border #{user.errors[:password_confirmation].any? ? 'border-red-500' : 'border-slate-600'} text-white rounded-lg px-4 py-3 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition duration-200" %>
+    <% if user.errors[:password_confirmation].any? %>
+      <p class="text-red-500 text-xs italic mt-2"><%= user.errors.full_messages_for(:password_confirmation).first %></p>
+    <% end %>
+  </div>
+
+  <div class="mb-8 mt-4 bg-slate-800/50 p-4 rounded-lg border border-slate-700">
+    <label class="flex items-center cursor-pointer group">
+      
+      <div class="relative flex items-center justify-center">
+        <%= form.check_box :is_admin, class: "sr-only peer" %>
+        
+        
+      </div>
+
+      <div class="ml-3">
+        <span class="block text-sm font-bold text-slate-200 group-hover:text-white transition duration-200">Privilégios de Administrador</span>
+        <span class="block text-xs text-slate-400 mt-0.5">Permite acesso total ao painel admin e visão global de dados.</span>
+      </div>
+
+    </label>
+  </div>
+
+  <div class="mt-8 flex gap-4">
+    <%= link_to "Cancelar", admin_users_path, class: "w-1/3 text-center bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 rounded-lg transition duration-200" %>
+    <%= form.submit "Salvar Usuário", class: "w-2/3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg py-3 transition duration-200 cursor-pointer" %>
+  </div>
+<% end %>

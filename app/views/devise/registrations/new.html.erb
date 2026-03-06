@@ -1,0 +1,81 @@
+<div class="min-h-screen bg-slate-900 flex items-center justify-center p-4">
+  <div class="max-w-md w-full bg-slate-800 rounded-xl shadow-2xl p-8 border border-slate-700">
+    
+    <h2 class="text-3xl font-bold text-white text-center mb-8">Criar Conta</h2>
+    <% if notice.present? %>
+      <div class="mb-4 bg-emerald-500/10 border border-emerald-500/50 text-emerald-500 text-sm p-3 rounded-lg text-center">
+        <%= notice %>
+      </div>
+    <% end %>
+
+    <% if alert.present? %>
+      <div class="mb-4 bg-red-500/10 border border-red-500/50 text-red-500 text-sm p-3 rounded-lg text-center">
+        <%= alert %>
+      </div>
+    <% end %>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+
+      <div class="mb-6">
+        <%= f.label :name, "Nome Completo (Opcional)", class: "block text-slate-400 text-sm font-bold mb-2" %>
+        <%= f.text_field :name, class: "w-full bg-slate-700 border #{resource.errors[:name].any? ? 'border-red-500' : 'border-slate-600'} text-white rounded-lg px-4 py-3 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition duration-200", autofocus: true %>
+        
+        <% if resource.errors[:name].any? %>
+          <p class="text-red-500 text-xs italic mt-2"><%= resource.errors.full_messages_for(:name).first %></p>
+        <% end %>
+      </div>
+
+      <div class="mb-6">
+        <%= f.label :email, class: "block text-slate-400 text-sm font-bold mb-2" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full bg-slate-700 border border-slate-600 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition duration-200" %>
+
+        <% if resource.errors[:email].any? %>
+          <p class="text-red-500 text-xs italic mt-2">
+            <%= resource.errors.full_messages_for(:email).first %>
+          </p>
+        <% end %>
+      </div>
+
+      <div class="mb-6">
+        <%= f.label :password, "Senha", class: "block text-slate-400 text-sm font-bold mb-2" %>
+        <% if @minimum_password_length %>
+          <em class="text-xs text-slate-500 mb-1 block">(Mínimo de <%= @minimum_password_length %> caracteres)</em>
+        <% end %>
+        <%= f.password_field :password, autocomplete: "new-password", class: "w-full bg-slate-700 border border-slate-600 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition duration-200" %>
+
+        <% if resource.errors[:password].any? %>
+          <p class="text-red-500 text-xs italic mt-2">
+            <%= resource.errors.full_messages_for(:password).first %>
+          </p>
+        <% end %>
+      </div>
+
+      <div class="mb-6">
+        <%= f.label :password_confirmation, "Confirmar Senha", class: "block text-slate-400 text-sm font-bold mb-2" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "w-full bg-slate-700 border border-slate-600 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition duration-200" %>
+
+        <% if resource.errors[:password_confirmation].any? %>
+          <p class="text-red-500 text-xs italic mt-2">
+            <%= resource.errors.full_messages_for(:password_confirmation).first %>
+          </p>
+        <% end %>
+      </div>
+
+      <% if user_signed_in? && current_user.is_admin? %>
+        <div class="mt-4 mb-6 flex items-center bg-slate-700/50 p-4 rounded-lg border border-red-500/30">
+          <%= f.check_box :is_admin, class: "w-5 h-5 text-red-600 bg-slate-800 border-slate-600 rounded focus:ring-red-500" %>
+          <%= f.label :is_admin, "Cadastrar como Administrador", class: "ml-3 text-sm font-bold text-white cursor-pointer" %>
+        </div>
+      <% end %>
+
+      <div class="mt-6">
+        <%= f.submit "Registrar", class: "w-full bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg px-4 py-3 transition duration-200 cursor-pointer" %>
+      </div>
+    <% end %>
+
+    <div class="mt-6 text-center text-sm text-slate-400 flex flex-col gap-2">
+      <%= render "devise/shared/links" %>
+    </div>
+
+  </div>
+</div>
