@@ -19,6 +19,29 @@
     <% end %>
   </div>
 
+  <div class="mb-10 flex flex-wrap items-center gap-3 bg-slate-800/50 p-3 rounded-lg border border-slate-700/50 w-fit">
+    <span class="text-sm font-bold text-slate-400 mr-2 flex items-center gap-2">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+      Filtrar:
+    </span>
+
+    <%= link_to root_path, class: "px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition duration-200 #{params[:status].blank? ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30 border border-blue-500' : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white border border-slate-600'}" do %>
+      Todas
+    <% end %>
+
+    <%= link_to root_path(status: 'pendente'), class: "px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition duration-200 #{params[:status] == 'pendente' ? 'bg-red-600 text-white shadow-lg shadow-red-500/30 border border-red-500' : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white border border-slate-600'}" do %>
+      Pendente
+    <% end %>
+
+    <%= link_to root_path(status: 'em_progresso'), class: "px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition duration-200 #{params[:status] == 'em_progresso' ? 'bg-yellow-500 text-white shadow-lg shadow-yellow-500/30 border border-yellow-500' : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white border border-slate-600'}" do %>
+      Em Progresso
+    <% end %>
+
+    <%= link_to root_path(status: 'concluida'), class: "px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition duration-200 #{params[:status] == 'concluida' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/30 border border-emerald-500' : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white border border-slate-600'}" do %>
+      Concluídas
+    <% end %>
+  </div>
+
   <% if @categories.empty? %>
     <div class="text-center bg-slate-800 rounded-xl p-10 border border-slate-700">
       <p class="text-slate-400">Você ainda não possui categorias criadas.</p>
@@ -57,11 +80,18 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           
-          <% if category.tasks.empty? %>
-            <p class="text-slate-500 italic text-sm">Nenhuma tarefa cadastrada nesta categoria.</p>
+          <% 
+            # A MÁGICA DO FILTRO: Se houver um parâmetro 'status' na URL, filtra as tarefas. Se não, mostra todas.
+            filtered_tasks = params[:status].present? ? category.tasks.select { |t| t.status == params[:status] } : category.tasks 
+          %>
+
+          <% if filtered_tasks.empty? %>
+            <p class="text-slate-500 italic text-sm">
+              <%= params[:status].present? ? "Nenhuma tarefa encontrada com este status." : "Nenhuma tarefa cadastrada nesta categoria." %>
+            </p>
           <% else %>
             
-            <% category.tasks.each do |task| %>
+            <% filtered_tasks.each do |task| %>
               <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-lg hover:border-slate-500 transition duration-200 flex flex-col justify-between">
                 
                 <div>
