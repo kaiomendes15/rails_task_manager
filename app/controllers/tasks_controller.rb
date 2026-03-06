@@ -45,7 +45,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.update(task_params)
-        format.html { redirect_to root_path, notice: "Criado com sucesso." }
+        format.html { redirect_to root_path, notice: "Atualizado com sucesso." }
         format.json { render :show, status: :ok, location: @task }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -60,7 +60,7 @@ class TasksController < ApplicationController
     @task.destroy!
 
     respond_to do |format|
-      format.html { redirect_to tasks_path, notice: "Task was successfully destroyed.", status: :see_other }
+      format.html { redirect_to root_path, notice: "Excluída com sucesso." }
       format.json { head :no_content }
     end
   end
@@ -73,6 +73,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.expect(task: [ :title, :due_date, :category_id ])
+      params.expect(task: [ :title, :due_date, :category_id, :status ])
     end
 end
