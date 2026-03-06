@@ -1,2 +1,81 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<div class="min-h-screen bg-slate-900 text-white p-6 md:p-12">
+  
+  <div class="mb-12 flex justify-between items-end border-b border-slate-700 pb-6">
+    <div>
+      <h1 class="text-4xl font-bold text-white mb-2">Meu Dashboard</h1>
+      <p class="text-slate-400">Bem-vindo(a), <%= current_user.email %></p>
+    </div>
+  </div>
+
+  <div class="mb-8 flex gap-4">
+    <%= link_to new_category_path, class: "flex items-center bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-bold py-2 px-4 rounded-lg transition duration-200 shadow-lg" do %>
+      <svg class="w-5 h-5 mr-2 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+      Nova Categoria
+    <% end %>
+
+    <%= link_to new_task_path, class: "flex items-center bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 shadow-lg" do %>
+      <svg class="w-5 h-5 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+      Nova Tarefa
+    <% end %>
+  </div>
+
+  <% if @categories.empty? %>
+    <div class="text-center bg-slate-800 rounded-xl p-10 border border-slate-700">
+      <p class="text-slate-400">Você ainda não possui categorias criadas.</p>
+    </div>
+  <% else %>
+    
+    <% @categories.each do |category| %>
+      <div class="mb-14">
+        
+        <h2 class="text-2xl font-bold text-slate-100 border-b border-slate-700 pb-3 mb-6 flex items-center">
+          <span class="bg-slate-800 border border-slate-600 px-3 py-1 rounded-md text-sm text-slate-400 mr-4 font-normal">
+            Categoria
+          </span>
+          <%= category.title %>
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          
+          <% if category.tasks.empty? %>
+            <p class="text-slate-500 italic text-sm">Nenhuma tarefa cadastrada nesta categoria.</p>
+          <% else %>
+            
+            <% category.tasks.each do |task| %>
+              <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-lg hover:border-slate-500 transition duration-200 flex flex-col justify-between">
+                
+                <div class="flex justify-between items-start mb-6 gap-2">
+                  <h3 class="text-lg font-bold text-white leading-tight"><%= task.title %></h3>
+                  
+                  <% 
+                    status_classes = case task.status
+                                     when 'pendente'
+                                       'bg-red-500/10 text-red-500 border-red-500/50'
+                                     when 'em_progresso'
+                                       'bg-yellow-500/10 text-yellow-500 border-yellow-500/50'
+                                     when 'concluida'
+                                       'bg-emerald-500/10 text-emerald-500 border-emerald-500/50'
+                                     else
+                                       'bg-slate-500/10 text-slate-500 border-slate-500/50'
+                                     end
+                  %>
+                  <span class="text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded border <%= status_classes %> shrink-0">
+                    <%= task.status&.titleize || "Sem Status" %>
+                  </span>
+                </div>
+                
+                <div class="text-sm text-slate-400 flex items-center mt-auto">
+                  <svg class="w-4 h-4 mr-2 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                  <%= task.due_date ? task.due_date.strftime("%d/%m/%Y") : "Sem data" %>
+                </div>
+
+              </div>
+            <% end %>
+            
+          <% end %>
+        </div>
+
+      </div>
+    <% end %>
+    
+  <% end %>
