@@ -1,26 +1,45 @@
-<h2>Log in</h2>
+<div class="min-h-screen bg-slate-900 flex items-center justify-center p-4">
+  <div class="max-w-md w-full bg-slate-800 rounded-xl shadow-2xl p-8 border border-slate-700">
+    
+    <h2 class="text-3xl font-bold text-white text-center mb-8">Login</h2>
+    <% if notice.present? %>
+      <div class="mb-4 bg-emerald-500/10 border border-emerald-500/50 text-emerald-500 text-sm p-3 rounded-lg text-center">
+        <%= notice %>
+      </div>
+    <% end %>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <p><%= f.label :email %></p>
-    <p><%= f.email_field :email, autofocus: true, autocomplete: "email" %></p>
-  </div>
+    <% if alert.present? %>
+      <div class="mb-4 bg-red-500/10 border border-red-500/50 text-red-500 text-sm p-3 rounded-lg text-center">
+        <%= alert %>
+      </div>
+    <% end %>
 
-  <div class="field">
-    <p><%= f.label :password %></p>
-    <p><%= f.password_field :password, autocomplete: "current-password" %></p>
-  </div>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="mb-6">
+        <%= f.label :email, class: "block text-slate-400 text-sm font-bold mb-2" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full bg-slate-700 border border-slate-600 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition duration-200" %>
+      </div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <p><%= f.check_box :remember_me %></p>
-      <p><%= f.label :remember_me %></p>
+      <div class="mb-6">
+        <%= f.label :password, "Senha", class: "block text-slate-400 text-sm font-bold mb-2" %>
+        <%= f.password_field :password, autocomplete: "current-password", class: "w-full bg-slate-700 border border-slate-600 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition duration-200" %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="flex items-center mb-6">
+          <%= f.check_box :remember_me, class: "w-4 h-4 text-red-600 bg-slate-700 border-slate-600 rounded focus:ring-red-500" %>
+          <%= f.label :remember_me, "Lembrar-me", class: "ml-2 text-sm text-slate-400 font-medium" %>
+        </div>
+      <% end %>
+
+      <div class="mt-6">
+        <%= f.submit "Entrar", class: "w-full bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg px-4 py-3 transition duration-200 cursor-pointer" %>
+      </div>
+    <% end %>
+
+    <div class="mt-6 text-center text-sm text-slate-400 flex flex-col gap-2">
+      <%= render "devise/shared/links" %>
     </div>
-  <% end %>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
