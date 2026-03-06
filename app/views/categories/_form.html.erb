@@ -9,7 +9,7 @@
   </div>
 
   <div class="mb-6">
-    <%= form.label :description, "Descrição (Opcional)", class: "block text-slate-400 text-sm font-bold mb-2" %>
+    <%= form.label :description, "Descrição", class: "block text-slate-400 text-sm font-bold mb-2" %>
     <%= form.text_area :description, rows: 4, class: "w-full bg-slate-700 border #{category.errors[:description].any? ? 'border-red-500' : 'border-slate-600'} text-white rounded-lg px-4 py-3 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition duration-200" %>
     <% if category.errors[:description].any? %>
       <p class="text-red-500 text-xs italic mt-2"><%= category.errors.full_messages_for(:description).first %></p>
