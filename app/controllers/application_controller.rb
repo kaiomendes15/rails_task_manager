@@ -25,8 +25,8 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     # Permite o :name na hora do cadastro
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :name ])
     # Permite o :name na hora de editar o perfil
-    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :name ])
   end
 end
