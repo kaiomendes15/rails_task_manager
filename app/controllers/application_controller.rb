@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
@@ -18,5 +19,14 @@ class ApplicationController < ActionController::Base
 
     # redireciona o usuario para a pagina ou raiz
     redirect_back(fallback_location: root_path)
+  end
+
+  protected
+
+  def configure_permitted_parameters
+    # Permite o :name na hora do cadastro
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    # Permite o :name na hora de editar o perfil
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
   end
 end
