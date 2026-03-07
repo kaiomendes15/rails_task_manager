@@ -11,3 +11,6 @@ bundle exec rails assets:clean
 
 echo "🗄️ Executando migrações do banco de dados..."
 bundle exec rails db:migrate
+
+echo "🌱 Populando o banco de dados (Semente)..."
+bundle exec rails db:seed
