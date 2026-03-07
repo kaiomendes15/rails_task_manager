@@ -5,7 +5,8 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791.svg)](https://www.postgresql.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-Projeto pessoal de portfólio focado no desenvolvimento Fullstack e práticas de DevOps, desenvolvido por Kaio Mendes. 
+Projeto pessoal de portfólio focado no desenvolvimento Fullstack.
+ 
 **Acesso em Produção:** [Task Master](https://rails-task-manager-4z2r.onrender.com)
 
 ## 1. Objetivo
